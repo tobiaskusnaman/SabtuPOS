@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>List Product</title>
+  </head>
+  <body>
+    <form action="/product" method="post">
+      name:<br>
+      <input type="text" name="name"><br>
+      stock:<br>
+      <input type="text" name="stock"><br>
+      price:<br>
+      <input type="text" name="price"><br>
+      description:<br>
+      <input type="text" name="description"><br>
+      image:<br>
+      <input type="text" name="imgSource"><br>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+
+      <table>
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>stock</th>
+          <th>price</th>
+          <th>description</th>
+        </tr>
+        <% data.forEach((row)=>{ %>
+        <tr>
+          <td><%= row.id %></td>
+          <td><%= row.name %></td>
+          <td><%= row.stock %></td>
+          <td><%= row.price %></td>
+          <td><%= row.description %></td>
+          <td> <a href="/product/edit/<%=row.id%>"> Edit </a>
+           |
+           <a href="/product/delete/<%=row.id%>" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a></td>
+        </tr>
+        <% }) %>
+      </table>
+  </body>
+</html>
