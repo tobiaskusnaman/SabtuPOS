@@ -1,12 +1,14 @@
 var express = require('express')
 var router = express.Router()
-const Models = require('../models');
+const models = require('../models');
 const bodyParser = require('body-parser')
+const Product = models.Product
+
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
 router.get('/', (req,res)=>{
-  Models.Product.findAll().then(data => {
+  Product.findAll().then(data => {
       res.render('product', {data})
   })
   .catch(err=>{
@@ -15,7 +17,7 @@ router.get('/', (req,res)=>{
 })
 
 router.post('/', (req,res)=>{
-  Models.Product.create({
+  Product.create({
     name : req.body.name,
     stock : req.body.stock,
     price : req.body.price,
@@ -31,7 +33,7 @@ router.post('/', (req,res)=>{
 })
 
 router.get('/edit/:id', (req,res)=>{
-  Models.Product.findById(req.params.id).then(row =>{
+  Product.findById(req.params.id).then(row =>{
     res.render('product_edit', {row})
   })
   .catch(err=>{
@@ -40,7 +42,7 @@ router.get('/edit/:id', (req,res)=>{
 })
 
 router.post('/edit/:id', (req,res)=>{
-  Models.Product.findById(req.params.id).then(row =>{
+  Product.findById(req.params.id).then(row =>{
     if (row) {
       row.updateAttributes({
         name : req.body.name,
@@ -59,7 +61,7 @@ router.post('/edit/:id', (req,res)=>{
 })
 
 router.get('/delete/:id', (req,res)=>{
-  Models.Product.destroy({
+  Product.destroy({
     where : {
       id : req.params.id
     }
