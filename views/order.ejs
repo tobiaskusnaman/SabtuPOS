@@ -51,9 +51,20 @@
             <th>Quantity</th>
             <th>Total Price</th>
           </tr>
+
+            <% details.forEach((detail,i) =>{ %>
           <tr>
+            <td><%= i+1 %></td>
+            <td><%= detail.Product.name%></td>
+            <td><%= detail.Product.price %></td>
+            <td><%= detail.quantity %></td>
+            <td><%= detail.totalPrice(detail.Product.price,detail.quantity)%></td>
+
 
           </tr>
+            <% }) %>
+            <%= JSON.stringify(details) %>
+
 
 
         </table>

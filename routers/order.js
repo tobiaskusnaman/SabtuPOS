@@ -8,6 +8,7 @@ const models = require('../models');
 const User = models.User
 const Product = models.Product
 const Invoice = models.Invoice
+const InvoiceDetail = models.InvoiceDetail
 
 router.get('/', (req,res)=>{
   Product.findAll().then((data)=>{
@@ -34,7 +35,18 @@ router.get('/', (req,res)=>{
           res.send(err)
         })
       } else {
-        res.render('order',{data, invoice})
+        InvoiceDetail.findAll({
+          include : [Product],
+          where : {
+            InvoiceId : String(invoice[0].id)
+          }
+
+        }).then((details)=>{
+          res.render('order',{data, invoice, details})
+        })
+        .catch(err=>{
+          res.send(err)
+        })
       }
     })
     .catch(err=>{
@@ -47,13 +59,21 @@ router.get('/', (req,res)=>{
 })
 
 router.post('/:id/invoices/:idInvoice', (req,res)=>{
-  Invoice.findById(req.params.idInvoice).then((invoice)=>{
-    res.send(invoice)
+  InvoiceDetail.create({
+    productId : req.params.id,
+    quantity : 1,
+    InvoiceId : req.params.idInvoice
+  }).then(()=>{
+    res.redirect('/order')
   })
   .catch(err=>{
     res.send(err)
   })
-  // res.send(req.params.idInvoice)
-  // res.send(req.body)
+  // Invoice.findById(req.params.idInvoice).then((invoice)=>{
+  //   res.send(invoice)
+  // })
+  // .catch(err=>{
+  //   res.send(err)
+  // })
 })
 module.exports = router;
