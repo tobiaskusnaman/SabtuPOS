@@ -4,8 +4,12 @@ const ejs = require('ejs')
 app.set('views', './views')
 app.set('view engine', 'ejs')
 
-const RouteProduct = require('./routes/product');
+const RouteProduct = require('./routers/product');
+const RouteUser = require('./routers/user');
 
 app.use('/product', RouteProduct);
+app.use('/admin', RouteUser);
+
+
 
 app.listen(3000);
