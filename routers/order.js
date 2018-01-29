@@ -59,18 +59,35 @@ router.get('/', (req,res)=>{
 })
 
 router.post('/:id/invoices/:idInvoice', (req,res)=>{
-  let obj = {
-    ProductId : req.params.id,
-    quantity : 1,
-    InvoiceId : req.params.idInvoice
-  }
+  InvoiceDetail.findOne({
+    where : {
+      ProductId : req.params.id,
+      InvoiceId : req.params.idInvoice
+    }
+  }).then(data=>{
+    if (data) {
+      data.update({
+        quantity : data.quantity+1
+      }).then(()=>{
+        res.redirect('/order')
+      })
+      .catch(err=>{
+        res.send(err)
+      })
+    } else {
+      let obj = {
+        ProductId : req.params.id,
+        quantity : 1,
+        InvoiceId : req.params.idInvoice
+      }
 
-  InvoiceDetail.create(obj).then(()=>{
-    res.redirect('/order')
+      InvoiceDetail.create(obj).then(()=>{
+        res.redirect('/order')
+      })
+      .catch(err=>{
+        res.send(err)
+      })
+    }
   })
-  .catch(err=>{
-    res.send(err)
-  })
-
 })
 module.exports = router;
