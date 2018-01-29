@@ -8,27 +8,36 @@ router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
   // LOGIN
-  router.get('/', (req, res) => {
+  router.get('/:id/listUser', (req, res) => {
     User.findAll().then(data => {
-        res.render('user',{data});
+        res.render('user',{data: data});
       })
       .catch(err =>{
         res.send(err)
       })
   });
+  // User home Page 
+  router.get('/:id', (req,res)=>{
+    User.findById(req.params.id).then(row =>{
+      res.render('userHome', {row})
+    })
+    .catch(err=>{
+      res.send(err)
+    })
+  });
+  
   // ADD user
-  router.post('/user', (req, res) => {
-    console.log(req.body);
+  router.post('/:id/listUser', (req, res) => {
     User.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
       password: req.body.password,
-      type: req.body.type,
-      isMember: req.body.isMember
+      type: req.body.typeUser,
+      isMember: req.body.memberType
     })
       .then(() => {
-        res.redirect('/admin');
+        res.redirect('/user/:id/listUser');
       })
       .catch(err=>{
         res.send(err)
@@ -36,7 +45,7 @@ router.use(bodyParser.json())
   });
   
 // GET user by id
-  router.get('/user/edit/:id', (req,res)=>{
+  router.get('/:id/listUser/edit/:id', (req,res)=>{
     User.findById(req.params.id).then(row =>{
       res.render('user_edit', {row})
     })
@@ -46,7 +55,7 @@ router.use(bodyParser.json())
   });
   
   // UPDATE user
-  router.post('/user/edit/:id', (req,res)=>{
+  router.post('/:id/listUser/edit/:id', (req,res)=>{
     User.findById(req.params.id).then(row =>{
       if (row) {
         row.update({
@@ -54,10 +63,10 @@ router.use(bodyParser.json())
           lastName: req.body.lastName,
           email: req.body.email,
           password: req.body.password,
-          type: req.body.type,
-          isMember: true
+          type: req.body.typeUser,
+          isMember: req.body.memberType
         }).then(() =>{
-          res.redirect('/admin')
+          res.redirect('/user/:id/listUser')
         })
       }
     })
@@ -67,13 +76,13 @@ router.use(bodyParser.json())
   })
   
   // DELETE User
-  router.get('/user/delete/:id', (req, res) => {
+  router.get('/:id/listUser/delete/:id', (req, res) => {
     User.destroy({
       where: { 
         id: req.params.id 
       }
     }).then(() => {
-        res.redirect('/admin');
+        res.redirect('/user/:id/listUser');
       })
       .catch(err=>{
         res.send(err)

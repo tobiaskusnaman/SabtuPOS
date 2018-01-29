@@ -8,7 +8,7 @@ const RouteProduct = require('./routers/product');
 const RouteUser = require('./routers/user');
 
 app.use('/product', RouteProduct);
-app.use('/admin', RouteUser);
+app.use('/user', RouteUser);
 
 
 

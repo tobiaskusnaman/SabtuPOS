@@ -7,7 +7,8 @@ const Product = models.Product
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
-router.get('/', (req,res)=>{
+//List Product
+router.get('/:id/listProduct', (req,res)=>{
   Product.findAll().then(data => {
       res.render('product', {data})
   })
@@ -15,8 +16,8 @@ router.get('/', (req,res)=>{
     res.send(err)
   })
 })
-
-router.post('/', (req,res)=>{
+//Add product
+router.post('/product', (req,res)=>{
   Product.create({
     name : req.body.name,
     stock : req.body.stock,
@@ -25,7 +26,7 @@ router.post('/', (req,res)=>{
     imgSource : req.body.imgSource,
     createdAt : new Date()
   }).then(()=>{
-    res.redirect('/product')
+    res.redirect('/product/:id/listProduct')
   })
   .catch(err=>{
     res.send(err)
