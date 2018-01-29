@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   var Invoice = sequelize.define('Invoice', {
     customerId: DataTypes.INTEGER,
     totalPrice: DataTypes.INTEGER,
-    paymenMethod: DataTypes.STRING
+    paymentMethod: DataTypes.STRING,
+    status : DataTypes.BOOLEAN
   }, {
     classMethods: {
       associate: function(models) {

@@ -16,14 +16,14 @@
         display: inline-flex;
         float: left;
         width:70%%;
-        height:100px;
+        height:1000px;
         border: 1px solid;
       }
       .half_right{
         display: inline-block;
         float: left;
         width:30%%;
-        height:100px;
+        height:1000px;
         border: 1px solid;
       }
     </style>
@@ -32,23 +32,34 @@
       <div class="half_left">
         <% data.forEach(row =>{ %>
 
-          <form action="/order/<%=row.id%>" method="POST">
-             <input type="image" name="itemId" src="<%= row.imgSource %>" width="200" height="200" value="<%= row.id %>" />
+          <form action="/order/<%=row.id%>/invoices/<%=invoice[0].id%>" method="POST">
+            <input type="image" name="itemId" src="<%= row.imgSource %>" width="200" height="200" value="<%= row.id %>" />
           </form>
 
         <% }) %>
       </div>
 
       <div class="half_right">
-        <h3>Pesanan</h3>
-        <table>
-          <th>No</th>
-          <th>Product</th>
+        <h3>Rincian Order</h3>
+        <h2>INVOICE Number : <%=invoice[0].id%></h2>
+
+        <table border = 1>
+          <tr>
+            <th>No</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+          </tr>
+          <tr>
+
+          </tr>
+
+
         </table>
 
       </div>
 
     </div>
-
   </body>
 </html>

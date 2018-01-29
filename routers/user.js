@@ -18,7 +18,6 @@ router.use(bodyParser.json())
   });
   // ADD user
   router.post('/user', (req, res) => {
-    console.log(req.body);
     User.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -34,7 +33,7 @@ router.use(bodyParser.json())
         res.send(err)
       })
   });
-  
+
 // GET user by id
   router.get('/user/edit/:id', (req,res)=>{
     User.findById(req.params.id).then(row =>{
@@ -44,7 +43,7 @@ router.use(bodyParser.json())
       res.send(err)
     })
   });
-  
+
   // UPDATE user
   router.post('/user/edit/:id', (req,res)=>{
     User.findById(req.params.id).then(row =>{
@@ -65,12 +64,12 @@ router.use(bodyParser.json())
       res.send(err)
     })
   })
-  
+
   // DELETE User
   router.get('/user/delete/:id', (req, res) => {
     User.destroy({
-      where: { 
-        id: req.params.id 
+      where: {
+        id: req.params.id
       }
     }).then(() => {
         res.redirect('/admin');
