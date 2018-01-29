@@ -90,4 +90,23 @@ router.post('/:id/invoices/:idInvoice', (req,res)=>{
     }
   })
 })
+
+router.post('/:id/invoice',(req,res)=>{
+  Invoice.findById(req.params.id).then(invoice=>{
+    res.send(invoice)
+  })
+})
+
+// router.post('/:id/invoice',(req,res)=>{
+//   Invoice.findById(req.params.id).then(invoice=>{
+//     invoice.update({
+//       status : 'TRUE'
+//     }).then((invoice) =>{
+//       res.send(invoice)
+//       res.redirect(`/invoiceSummary/${req.params.id}`)
+//     })
+//   })
+// })
+
+
 module.exports = router;

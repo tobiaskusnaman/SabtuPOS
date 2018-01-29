@@ -51,18 +51,27 @@
             <th>Quantity</th>
             <th>Total Price</th>
           </tr>
-
-            <% details.forEach((detail,i) =>{ %>
-          <tr>
-            <td><%= i+1 %></td>
-            <td><%= detail.Product.name%></td>
-            <td><%= detail.Product.price %></td>
-            <td><%= detail.quantity %></td>
-            <td><%= detail.totalPrice(detail.Product.price,detail.quantity)%></td>
-          </tr>
-            <% }) %>
+          <% if (details) { %>
+            <% var subTotal = 0 %>
+              <% details.forEach((detail,i) =>{ %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= detail.Product.name%></td>
+              <td><%= detail.Product.price %></td>
+              <td><%= detail.quantity %></td>
+              <td><%= detail.totalPrice(detail.Product.price,detail.quantity)%></td>
+              <%= subTotal += detail.totalPrice(detail.Product.price,detail.quantity) %>
+            </tr>
+              <% }) %>
+          <% } %>
         </table>
-
+        <h2>Sub Total : </h2>
+          <%=subTotal%>
+        <h2></h2>
+        <br><br>
+                <form action="/order/<%=invoice[0].id%>/invoice" method="POST">
+                  <input type="submit" value="Order">
+                </form>
       </div>
 
     </div>
