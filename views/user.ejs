@@ -5,7 +5,7 @@
     <title>List User</title>
   </head>
   <body>
-    <form action="/admin/user" method="post">
+    <form action="/user/:id/listUser" method="post">
       First Name:<br>
       <input type="text" name="firstName"><br>
       Last Name:<br>
@@ -15,11 +15,12 @@
       Password:<br>
       <input type="text" name="password"><br>
       Type:<br>
-      <input type="text" name="type"><br>
+      <input type="radio" name="typeUser" value="Admin"> Admin
+      <input type="radio" name="typeUser" value="Kasir"> Kasir<br>
       Membership:<br>
-      <input type="text" name="isMember"><br>
-      <button>Submit</button>
-
+      <input type="radio" name="memberType" value=true> True
+      <input type="radio" name="memberType" value=false> False<br>
+      <input style="width: 130px" type="submit" value="Submit">
     </form>
 
       <table>
@@ -32,7 +33,9 @@
           <th>Type</th>
           <th>Membership</th>
         </tr>
-        <% data.forEach((row)=>{ %>
+        <% data.sort(function(a,b){
+          return a.id -b.id
+        }).forEach((row)=>{ %>
         <tr>
           <td><%= row.id %></td>
           <td><%= row.firstName %></td>
@@ -42,8 +45,8 @@
           <td><%= row.type %></td>
           <td><%= row.membership %></td>
           <td>
-            <a href="/admin/user/edit/<%=row.id%>"> Edit </a>
-            <a href="/admin/user/delete/<%=row.id%>">Delete</a>
+            <a href="/user/<%=row.id%>/listUser/edit/<%=row.id%>"> Edit </a>
+            <a href="/user/<%=row.id%>/listUser/delete/<%=row.id%>">Delete</a>
           </td>
         </tr>
         <% }) %>
