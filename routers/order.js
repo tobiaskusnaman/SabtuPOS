@@ -59,21 +59,18 @@ router.get('/', (req,res)=>{
 })
 
 router.post('/:id/invoices/:idInvoice', (req,res)=>{
-  InvoiceDetail.create({
-    productId : req.params.id,
+  let obj = {
+    ProductId : req.params.id,
     quantity : 1,
     InvoiceId : req.params.idInvoice
-  }).then(()=>{
+  }
+
+  InvoiceDetail.create(obj).then(()=>{
     res.redirect('/order')
   })
   .catch(err=>{
     res.send(err)
   })
-  // Invoice.findById(req.params.idInvoice).then((invoice)=>{
-  //   res.send(invoice)
-  // })
-  // .catch(err=>{
-  //   res.send(err)
-  // })
+
 })
 module.exports = router;
