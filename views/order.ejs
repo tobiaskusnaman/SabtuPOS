@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <style>
+      .container{
+        width: 100%;
+        display: inline-flex;
+      }
+
+      .half_left{
+        display: inline-flex;
+        float: left;
+        width:70%%;
+        height:100px;
+        border: 1px solid;
+      }
+      .half_right{
+        display: inline-block;
+        float: left;
+        width:30%%;
+        height:100px;
+        border: 1px solid;
+      }
+    </style>
+
+    <div class="container">
+      <div class="half_left">
+        <% data.forEach(row =>{ %>
+
+          <form action="/order/<%=row.id%>" method="POST">
+             <input type="image" name="itemId" src="<%= row.imgSource %>" width="200" height="200" value="<%= row.id %>" />
+          </form>
+
+        <% }) %>
+      </div>
+
+      <div class="half_right">
+        <h3>Pesanan</h3>
+        <table>
+          <th>No</th>
+          <th>Product</th>
+        </table>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>
