@@ -38,11 +38,16 @@
           </form>
 
         <% }) %>
+
+        <% if (err) { %>
+          <h2><%= err %> </h2>
+        <% } %>
+
       </div>
 
       <div class="half_right">
         <h3>Rincian Order</h3>
-        <h2>INVOICE Number : <%=invoice[0].id%></h2>
+        <h2>INVOICE ID : <%=invoice[0].id%></h2>
 
         <table border = 1>
           <tr>
