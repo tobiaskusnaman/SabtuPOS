@@ -7,9 +7,13 @@ app.set('view engine', 'ejs')
 const RouteProduct = require('./routers/product');
 const RouteHome = require('./routers/home');
 const RouteOrder = require('./routers/order');
+const RouteUser = require('./routers/user');
 
 app.use('/', RouteHome)
 app.use('/order', RouteOrder)
 app.use('/product', RouteProduct);
+app.use('/admin', RouteUser);
+
+
 
 app.listen(3000);
