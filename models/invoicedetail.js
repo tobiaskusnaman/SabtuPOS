@@ -1,15 +1,20 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var InvoiceDetail = sequelize.define('InvoiceDetail', {
-    productId: DataTypes.INTEGER,
-    invoiceId: DataTypes.INTEGER,
+    ProductId: DataTypes.INTEGER,
+    InvoiceId: DataTypes.INTEGER,
     quantity: DataTypes.INTEGER
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
   });
+
+  InvoiceDetail.associate = function (models) {
+    InvoiceDetail.belongsTo(models.Product);
+  };
+
+
+  InvoiceDetail.prototype.totalPrice = function (price, quantity) {
+    return price*quantity
+
+  }
+
   return InvoiceDetail;
 };

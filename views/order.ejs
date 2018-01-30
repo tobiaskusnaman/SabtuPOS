@@ -16,14 +16,14 @@
         display: inline-flex;
         float: left;
         width:70%%;
-        height:100px;
+        height:1000px;
         border: 1px solid;
       }
       .half_right{
         display: inline-block;
         float: left;
         width:30%%;
-        height:100px;
+        height:1000px;
         border: 1px solid;
       }
     </style>
@@ -32,23 +32,49 @@
       <div class="half_left">
         <% data.forEach(row =>{ %>
 
-          <form action="/order/<%=row.id%>" method="POST">
-             <input type="image" name="itemId" src="<%= row.imgSource %>" width="200" height="200" value="<%= row.id %>" />
+          <form action="/order/<%=row.id%>/invoices/<%=invoice[0].id%>" method="POST">
+            <input type="image" name="itemId" src="<%= row.imgSource %>" width="200" height="200" value="<%= row.id %>" />
+
           </form>
 
         <% }) %>
       </div>
 
       <div class="half_right">
-        <h3>Pesanan</h3>
-        <table>
-          <th>No</th>
-          <th>Product</th>
+        <h3>Rincian Order</h3>
+        <h2>INVOICE Number : <%=invoice[0].id%></h2>
+
+        <table border = 1>
+          <tr>
+            <th>No</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+          </tr>
+          <% if (details !== undefined) { %>
+            <% var subTotal = 0 %>
+              <% details.forEach((detail,i) =>{ %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= detail.Product.name%></td>
+              <td><%= detail.Product.price %></td>
+              <td><%= detail.quantity %></td>
+              <td><%= detail.totalPrice(detail.Product.price,detail.quantity)%></td>
+              <%= subTotal += detail.totalPrice(detail.Product.price,detail.quantity) %>
+            </tr>
+              <% }) %>
+          <% } %>
         </table>
-
+        <h2>Sub Total : </h2>
+          <%=subTotal%>
+        <h2></h2>
+        <br><br>
+                <form action="/order/<%=invoice[0].id%>/invoice" method="POST">
+                  <input type="hidden" name="totalPrice" value="<%= subTotal %>">
+                  <input type="submit" value="Order">
+                </form>
       </div>
-
     </div>
-
   </body>
 </html>
