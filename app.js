@@ -8,8 +8,6 @@ const RouteProduct = require('./routers/product');
 const RouteHome = require('./routers/home');
 const RouteOrder = require('./routers/order');
 const RouteUser = require('./routers/user');
-const RouteHome = require('./routers/home');
-const RouteOrder = require('./routers/order');
 
 app.use('/', RouteHome)
 app.use('/order', RouteOrder)
