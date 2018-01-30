@@ -43,7 +43,7 @@ router.use(bodyParser.json())
         res.send(err)
       })
   });
-  
+
 // GET user by id
   router.get('/:id/listUser/edit/:id', (req,res)=>{
     User.findById(req.params.id).then(row =>{
@@ -53,7 +53,7 @@ router.use(bodyParser.json())
       res.send(err)
     })
   });
-  
+
   // UPDATE user
   router.post('/:id/listUser/edit/:id', (req,res)=>{
     User.findById(req.params.id).then(row =>{
@@ -74,12 +74,12 @@ router.use(bodyParser.json())
       res.send(err)
     })
   })
-  
+
   // DELETE User
   router.get('/:id/listUser/delete/:id', (req, res) => {
     User.destroy({
-      where: { 
-        id: req.params.id 
+      where: {
+        id: req.params.id
       }
     }).then(() => {
         res.redirect('/user/:id/listUser');
