@@ -42,6 +42,7 @@ router.get('/', (req,res)=>{
           }
 
         }).then((details)=>{
+          // res.send(details)
           res.render('order',{data, invoice, details})
         })
         .catch(err=>{

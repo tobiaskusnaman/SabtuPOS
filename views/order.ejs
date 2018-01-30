@@ -51,7 +51,7 @@
             <th>Quantity</th>
             <th>Total Price</th>
           </tr>
-          <% if (details) { %>
+          <% if (details !== undefined) { %>
             <% var subTotal = 0 %>
               <% details.forEach((detail,i) =>{ %>
             <tr>
@@ -70,6 +70,7 @@
         <h2></h2>
         <br><br>
                 <form action="/order/<%=invoice[0].id%>/invoice" method="POST">
+                  <input type="hidden" name="totalPrice" value="<%= subTotal %>">
                   <input type="submit" value="Order">
                 </form>
       </div>
