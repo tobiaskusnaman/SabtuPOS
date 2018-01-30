@@ -16,7 +16,7 @@ router.use(bodyParser.json())
         res.send(err)
       })
   });
-  // User home Page 
+  // User home Page
   router.get('/:id', (req,res)=>{
     User.findById(req.params.id).then(row =>{
       res.render('userHome', {row})
@@ -25,7 +25,7 @@ router.use(bodyParser.json())
       res.send(err)
     })
   });
-  
+
   // ADD user
   router.post('/:id/listUser', (req, res) => {
     User.create({

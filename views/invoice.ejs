@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Invoice</title>
+  </head>
+  <body>
+    <h1>Invoice ID : <%= invoice.id %> </h1>
+    <table border = 1>
+      <tr>
+        <th>No</th>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total Price</th>
+      </tr>
+        <% var subTotal = 0 %>
+        <% invoice.Products.forEach((product,i) =>{ %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td><%= product.name%></td>
+        <td><%= product.price %></td>
+        <td><%= product.InvoiceDetail.quantity %></td>
+        <td><%= product.totalPrice(product.price,product.InvoiceDetail.quantity)%></td>
+
+        <% subTotal += product.totalPrice(product.price,product.InvoiceDetail.quantity) %>
+      </tr>
+      <% }) %>
+    </table>
+    <h3>Sub Total : <%=subTotal%> </h3>
+
+    <a href="/order">Edit Invoice</a>
+      <br>
+
+    <h3>Customer</h3>
+    <form action="/order/receipt/<%=invoice.id%>" method="post">
+      Email :
+      <input type="text" name="email"><br>
+      Payment Method
+      <select name="paymentMethod">
+        <option value="cash">Cash</option>
+        <option value="debit">Debit</option>
+        <option value="credit">Credit</option>
+      </select><br>
+
+      Membership:<br>
+      <input type="radio" name="memberType" value="TRUE"> True <br>
+      <input type="radio" name="memberType" value="FALSE"> False<br>
+      <input type="hidden" name="type" value="Customer">
+      <input type="hidden" name="totalPrice" value="<%=subTotal%>">
+
+      <input type="submit" value="Submit">
+    </form>
+
+  </body>
+</html>

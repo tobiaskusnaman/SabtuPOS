@@ -8,12 +8,12 @@ module.exports = (sequelize, DataTypes) => {
 
   InvoiceDetail.associate = function (models) {
     InvoiceDetail.belongsTo(models.Product);
+    InvoiceDetail.belongsTo(models.Invoice)
   };
 
 
   InvoiceDetail.prototype.totalPrice = function (price, quantity) {
     return price*quantity
-
   }
 
   return InvoiceDetail;

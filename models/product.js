@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     Product.hasMany(models.InvoiceDetail);
   };
 
+  Product.prototype.totalPrice = function (price, quantity) {
+    return price*quantity
+  }
 
   return Product;
 };
