@@ -34,6 +34,7 @@
 
           <form action="/order/<%=row.id%>/invoices/<%=invoice[0].id%>" method="POST">
             <input type="image" name="itemId" src="<%= row.imgSource %>" width="200" height="200" value="<%= row.id %>" />
+
           </form>
 
         <% }) %>
@@ -74,7 +75,6 @@
                   <input type="submit" value="Order">
                 </form>
       </div>
-
     </div>
   </body>
 </html>

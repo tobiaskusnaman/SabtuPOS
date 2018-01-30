@@ -5,6 +5,7 @@ router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
 const models = require('../models');
+<<<<<<< HEAD
 const User = models.User
 const Product = models.Product
 const Invoice = models.Invoice
@@ -53,12 +54,22 @@ router.get('/', (req,res)=>{
     .catch(err=>{
       res.send(err)
     })
+=======
+const Product = models.Product
+
+
+
+router.get('/', (req,res)=>{
+  Product.findAll().then((data)=>{
+    res.render('order',{data})
+>>>>>>> 03b3158ec68846a593dc583f9622aa7420789b21
   })
   .catch(err=>{
     res.send(err)
   })
 })
 
+<<<<<<< HEAD
 router.post('/:id/invoices/:idInvoice', (req,res)=>{
   InvoiceDetail.findOne({
     where : {
@@ -110,4 +121,9 @@ router.post('/:id/invoice',(req,res)=>{
 // })
 
 
+=======
+router.post('/:id', (req,res)=>{
+  res.send(req.body.itemId)
+})
+>>>>>>> 03b3158ec68846a593dc583f9622aa7420789b21
 module.exports = router;

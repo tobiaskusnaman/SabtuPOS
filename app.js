@@ -5,6 +5,8 @@ app.set('views', './views')
 app.set('view engine', 'ejs')
 
 const RouteProduct = require('./routers/product');
+const RouteHome = require('./routers/home');
+const RouteOrder = require('./routers/order');
 const RouteUser = require('./routers/user');
 const RouteHome = require('./routers/home');
 const RouteOrder = require('./routers/order');
