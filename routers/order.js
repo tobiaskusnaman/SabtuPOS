@@ -38,11 +38,9 @@ router.get('/', (req,res)=>{
         InvoiceDetail.findAll({
           include : [Product],
           where : {
-            InvoiceId : String(invoice[0].id)
+            InvoiceId : invoice[0].id
           }
-
         }).then((details)=>{
-          // res.send(details)
           res.render('order',{data, invoice, details})
         })
         .catch(err=>{
@@ -92,22 +90,40 @@ router.post('/:id/invoices/:idInvoice', (req,res)=>{
   })
 })
 
-router.post('/:id/invoice',(req,res)=>{
-  Invoice.findById(req.params.id).then(invoice=>{
-    res.send(invoice)
+router.post('/invoice/:id',(req,res)=>{
+  Invoice.findById(req.params.id,{
+    include :[Product]
+  }).then(invoice=>{
+    res.render('invoice',{invoice})
   })
+  .catch(err=>{res.send(err)})
 })
 
-// router.post('/:id/invoice',(req,res)=>{
-//   Invoice.findById(req.params.id).then(invoice=>{
-//     invoice.update({
-//       status : 'TRUE'
-//     }).then((invoice) =>{
-//       res.send(invoice)
-//       res.redirect(`/invoiceSummary/${req.params.id}`)
-//     })
-//   })
-// })
+router.post('/receipt/:id', (req,res)=>{
+  //kurangin quantity di Product
+
+
+  //record data Customer di User
+    User.create({
+      email : req.body.email,
+      type : req.body.type,
+      isMember : req.body.memberType
+    }).then((user)=>{
+      Invoice.findById(req.params.id)
+      .then(invoice => { //update status di INVOICES jadi TRUE
+        invoice.update({
+          customerId : user.id,
+          status : 'TRUE',
+          totalPrice : req.body.totalPrice,
+          paymentMethod : req.body.paymentMethod
+        }).then(invoice =>{
+
+          res.send(invoice)
+        })
+      })
+    })
+})
+
 
 
 module.exports = router;

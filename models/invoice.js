@@ -5,12 +5,14 @@ module.exports = (sequelize, DataTypes) => {
     totalPrice: DataTypes.INTEGER,
     paymentMethod: DataTypes.STRING,
     status : DataTypes.BOOLEAN
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
   });
+
+  Invoice.associate = function (models) {
+    Invoice.hasMany(models.InvoiceDetail)
+    Invoice.belongsToMany(models.Product, {through: 'InvoiceDetail'});
+  };
+
+
+
   return Invoice;
 };

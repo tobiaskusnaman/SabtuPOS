@@ -70,7 +70,7 @@
           <%=subTotal%>
         <h2></h2>
         <br><br>
-                <form action="/order/<%=invoice[0].id%>/invoice" method="POST">
+                <form action="/order/invoice/<%=invoice[0].id%>" method="POST">
                   <input type="hidden" name="totalPrice" value="<%= subTotal %>">
                   <input type="submit" value="Order">
                 </form>
