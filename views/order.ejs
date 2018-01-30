@@ -61,7 +61,7 @@
               <td><%= detail.Product.price %></td>
               <td><%= detail.quantity %></td>
               <td><%= detail.totalPrice(detail.Product.price,detail.quantity)%></td>
-              <%= subTotal += detail.totalPrice(detail.Product.price,detail.quantity) %>
+              <% subTotal += detail.totalPrice(detail.Product.price,detail.quantity) %>
             </tr>
               <% }) %>
           <% } %>
