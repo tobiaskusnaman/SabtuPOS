@@ -9,15 +9,16 @@ router.use(bodyParser.json())
 
 //List Product
 router.get('/:id/listProduct', (req,res)=>{
+  console.log(req.params.id)
   Product.findAll().then(data => {
-      res.render('product', {data})
+      res.render('product', {data: data})
   })
   .catch(err=>{
     res.send(err)
   })
 })
 //Add product
-router.post('/product', (req,res)=>{
+router.post('/addProduct', (req,res)=>{
   Product.create({
     name : req.body.name,
     stock : req.body.stock,
@@ -26,14 +27,14 @@ router.post('/product', (req,res)=>{
     imgSource : req.body.imgSource,
     createdAt : new Date()
   }).then(()=>{
-    res.redirect('/product/:id/listProduct')
+    res.redirect(`/product/:id/listProduct`)
   })
   .catch(err=>{
     res.send(err)
   })
 })
-
-router.get('/edit/:id', (req,res)=>{
+//GET edit
+router.get('/listProduct/edit/:id', (req,res)=>{
   Product.findById(req.params.id).then(row =>{
     res.render('product_edit', {row})
   })
@@ -41,8 +42,8 @@ router.get('/edit/:id', (req,res)=>{
     res.send(err)
   })
 })
-
-router.post('/edit/:id', (req,res)=>{
+//POST edit
+router.post('/listProduct/edit/:id', (req,res)=>{
   Product.findById(req.params.id).then(row =>{
     if (row) {
       row.updateAttributes({
@@ -52,7 +53,7 @@ router.post('/edit/:id', (req,res)=>{
         description : req.body.description,
         imgSource : req.body.imgSource
       }).then(row =>{
-        res.redirect('/product')
+        res.redirect('/product/:id/listProduct')
       })
     }
   })
@@ -61,14 +62,17 @@ router.post('/edit/:id', (req,res)=>{
   })
 })
 
-router.get('/delete/:id', (req,res)=>{
+router.get('/delete/:id/', (req, res) => {
   Product.destroy({
-    where : {
-      id : req.params.id
+    where: { 
+      id: req.params.id 
     }
-  }).then(()=>{
-    res.redirect('/product')
-  })
+  }).then(() => {
+      res.redirect('/product/:id/listProduct');
+    })
+    .catch(err=>{
+      res.send(err)
+    })  
 })
 
 

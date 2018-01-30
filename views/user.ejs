@@ -18,8 +18,8 @@
       <input type="radio" name="typeUser" value="Admin"> Admin
       <input type="radio" name="typeUser" value="Kasir"> Kasir<br>
       Membership:<br>
-      <input type="radio" name="memberType" value=true> True
-      <input type="radio" name="memberType" value=false> False<br>
+      <input type="radio" name="memberType" value="TRUE"> True
+      <input type="radio" name="memberType" value="FALSE"> False<br>
       <input style="width: 130px" type="submit" value="Submit">
     </form>
 
@@ -43,7 +43,7 @@
           <td><%= row.email %></td>
           <td><%= row.password %></td>
           <td><%= row.type %></td>
-          <td><%= row.membership %></td>
+          <td><%= row.isMember %></td>
           <td>
             <a href="/user/<%=row.id%>/listUser/edit/<%=row.id%>"> Edit </a>
             <a href="/user/<%=row.id%>/listUser/delete/<%=row.id%>">Delete</a>
