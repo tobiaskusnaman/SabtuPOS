@@ -3,13 +3,12 @@ var router = express.Router()
 const models = require('../models');
 const bodyParser = require('body-parser')
 const User = models.User
-const authHelper = require('../helpers/authLogInAdmin');
 
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
   // LOGIN
-  router.get('/:id/listUser', authHelper.authAdmin, (req, res) => {
+  router.get('/:id/listUser', (req, res) => {
     User.findAll().then(data => {
         res.render('user',{data: data});
       })
@@ -18,7 +17,7 @@ router.use(bodyParser.json())
       })
   });
   // User home Page
-  router.get('/:id', authHelper.authAdmin, (req,res)=>{
+  router.get('/:id', (req,res)=>{
     User.findById(req.params.id).then(row =>{
       res.render('userHome', {row})
     })
@@ -28,7 +27,7 @@ router.use(bodyParser.json())
   });
 
   // ADD user
-  router.post('/:id/listUser', authHelper.authAdmin, (req, res) => {
+  router.post('/:id/listUser', (req, res) => {
     User.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -46,7 +45,7 @@ router.use(bodyParser.json())
   });
 
 // GET user by id
-  router.get('/:id/listUser/edit/:id', authHelper.authAdmin, (req,res)=>{
+  router.get('/:id/listUser/edit/:id', (req,res)=>{
     User.findById(req.params.id).then(row =>{
       res.render('user_edit', {row})
     })
@@ -56,7 +55,7 @@ router.use(bodyParser.json())
   });
 
   // UPDATE user
-  router.post('/:id/listUser/edit/:id', authHelper.authAdmin, (req,res)=>{
+  router.post('/:id/listUser/edit/:id',(req,res)=>{
     User.findById(req.params.id).then(row =>{
       if (row) {
         row.update({
@@ -77,7 +76,7 @@ router.use(bodyParser.json())
   })
 
   // DELETE User
-  router.get('/:id/listUser/delete/:id', authHelper.authAdmin, (req, res) => {
+  router.get('/:id/listUser/delete/:id', (req, res) => {
     User.destroy({
       where: {
         id: req.params.id

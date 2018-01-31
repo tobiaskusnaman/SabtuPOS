@@ -7,12 +7,16 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     type: DataTypes.STRING,
     isMember: DataTypes.BOOLEAN
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
   });
+
+  User.beforeCreate(user => {
+    if (user.password) {
+      var bcrypt = require('bcrypt');
+      const saltRounds = 10;
+      return bcrypt.hash(user.password, saltRounds).then(function(hash) {
+         user.password = hash
+      });
+    }
+  })
   return User;
 };

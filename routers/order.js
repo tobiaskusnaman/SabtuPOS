@@ -4,14 +4,13 @@ const bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
-const authHelper = require('../helpers/authLogin');
 const models = require('../models');
 const User = models.User
 const Product = models.Product
 const Invoice = models.Invoice
 const InvoiceDetail = models.InvoiceDetail
 
-router.get('/', authHelper.checkLogIn,
+router.get('/',
   function(req,res,next){
     //CEK masi ada invoice yang statusnya masi blm TRUE atau gk
     Invoice.findAll({
@@ -76,7 +75,7 @@ router.get('/', authHelper.checkLogIn,
   })
 })
 
-router.post('/:id/invoices/:idInvoice', authHelper.checkLogIn,
+router.post('/:id/invoices/:idInvoice',
   function(req,res,next){
 
     //CEK kira2 klo abis nambah barang, stock nya masi ada atau gak
@@ -141,7 +140,7 @@ router.post('/:id/invoices/:idInvoice', authHelper.checkLogIn,
   })
 })
 
-router.post('/invoice/:id', authHelper.checkLogIn, (req,res)=>{
+router.post('/invoice/:id', (req,res)=>{
   Invoice.findById(req.params.id,{
     include :[Product]
   }).then(invoice=>{
