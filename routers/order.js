@@ -30,7 +30,7 @@ router.get('/',
             }
           }).then((invoice)=>{
             let err
-            res.render('order',{data,invoice,err})
+            res.redirect('/order')
           })
         })
         .catch(err=>{
@@ -150,42 +150,46 @@ router.post('/invoice/:id', (req,res)=>{
 })
 
 router.post('/receipt/:id', (req,res)=>{
-  //kurangin quantity di Product
+  let promise = []
   InvoiceDetail.findAll({
+    include : [Product],
     where : {
       InvoiceId : req.params.id
     }
   }).then(details =>{
-    details.forEach(detail=>{
-      Product.findById(detail.ProductId).then(item =>{
-        item.update({
-          stock : (item.stock-detail.quantity)
-        })
-        item.save()
-      }).then(()=>{
-//--------------------------kurangin beres di sini--------------------------
-//record data Customer di User
-        User.create({
-          email : req.body.email,
-          type : req.body.type,
-          isMember : req.body.memberType
-        }).then((user)=>{
-          Invoice.findById(req.params.id)
-          .then(invoice => {
-//update status di INVOICES jadi TRUE
-            invoice.update({
-              customerId : user.id,
-              status : 'TRUE',
-              totalPrice : req.body.totalPrice,
-              paymentMethod : req.body.paymentMethod
-            }).then(invoice =>{
-              res.redirect('/order')
-            })
-          })
-        })
-      })
+    details.forEach(detail => {
+      promise.push(Product.update({
+        stock : (detail.Product.stock - detail.quantity)
+      }, {
+        where : {
+          id : detail.ProductId
+        }
+      }))
     })
-  }).catch(err=>{res.send(err)})
+  })
+
+  Promise.all(promise).then(()=>{
+    User.create({
+       email : req.body.email,
+       type : req.body.type,
+       isMember : req.body.memberType
+     }).then((user)=>{
+       Invoice.update({
+         customerId : user.id,
+         status : 'TRUE',
+         totalPrice : req.body.totalPrice,
+         paymentMethod : req.body.paymentMethod
+       }, {
+         where : {
+           id : req.params.id
+         }
+       }).then(()=>{
+         res.redirect('/order')
+       })
+     })
+  })
+
+
 })
 
 
