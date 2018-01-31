@@ -4,13 +4,14 @@ const bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
+const authHelper = require('../helpers/authLogin');
 const models = require('../models');
 const User = models.User
 const Product = models.Product
 const Invoice = models.Invoice
 const InvoiceDetail = models.InvoiceDetail
 
-router.get('/',
+router.get('/', authHelper.checkLogIn,
   function(req,res,next){
     //CEK masi ada invoice yang statusnya masi blm TRUE atau gk
     Invoice.findAll({
@@ -75,7 +76,7 @@ router.get('/',
   })
 })
 
-router.post('/:id/invoices/:idInvoice',
+router.post('/:id/invoices/:idInvoice', authHelper.checkLogIn,
   function(req,res,next){
 
     //CEK kira2 klo abis nambah barang, stock nya masi ada atau gak
@@ -91,6 +92,7 @@ router.post('/:id/invoices/:idInvoice',
           if (product.stock>0) {
             next()
           } else {
+            // res.redirect(`/order/?err=${err.message}`)
             res.redirect(`/order/?err=sudahhabis`)
           }
         })
@@ -139,7 +141,7 @@ router.post('/:id/invoices/:idInvoice',
   })
 })
 
-router.post('/invoice/:id',(req,res)=>{
+router.post('/invoice/:id', authHelper.checkLogIn, (req,res)=>{
   Invoice.findById(req.params.id,{
     include :[Product]
   }).then(invoice=>{
@@ -184,10 +186,7 @@ router.post('/receipt/:id', (req,res)=>{
         })
       })
     })
-    // res.send(detail)
   }).catch(err=>{res.send(err)})
-
-
 })
 
 

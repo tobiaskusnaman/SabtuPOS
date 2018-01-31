@@ -9,10 +9,13 @@
     <h1>Sabtu POS</h1>
     <h2>Log In</h2>
     <form action="/" method="POST">
-      username: <input type="text" name="username"><br>
+      username: <input type="text" name="email"><br>
       password: <input type="password" name="password"><br>
-      <input type="submit" value="Submit">
+      <input type="submit" value="Log In">
     </form>
     <br><br>
+    <% if (err) { %>
+      <%= err %>
+    <% } %>
   </body>
 </html>
