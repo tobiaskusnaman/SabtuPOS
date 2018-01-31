@@ -5,7 +5,10 @@
     <title>Edit User</title>
   </head>
   <body>
-    <form action="/user/<%=row.id%>/listUser/" method="post">
+    <%if(err){%>
+       <%=err%>
+   <%}%>
+    <form action="/user/listUser/edit/<%=row.id%>" method="post">
       First Name:<br>
       <input type="text" name ="firstName" value="<%= row.firstName %>"><br>
       Last Name:<br>
@@ -21,7 +24,6 @@
       <input type="radio" name="memberType" value="TRUE"> True
       <input type="radio" name="memberType" value="FALSE"> False<br>
       <input style="width: 130px" type="submit" value="Submit">
-      <input type="submit" value="Submit">
     </form>
 
   </body>

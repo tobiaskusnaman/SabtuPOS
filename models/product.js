@@ -2,7 +2,14 @@
 module.exports = (sequelize, DataTypes) => {
   var Product = sequelize.define('Product', {
     name: DataTypes.STRING,
-    stock: DataTypes.INTEGER,
+    stock: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt:{
+          msg:'Please enter a valid value'
+        }
+      }
+    },
     price: DataTypes.INTEGER,
     description: DataTypes.STRING,
     imgSource: DataTypes.STRING
