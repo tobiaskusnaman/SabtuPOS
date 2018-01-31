@@ -48,5 +48,15 @@ module.exports = (sequelize, DataTypes) => {
     }
 
   });
+
+  User.beforeCreate(user => {
+    if (user.password) {
+      var bcrypt = require('bcrypt');
+      const saltRounds = 10;
+      return bcrypt.hash(user.password, saltRounds).then(function(hash) {
+         user.password = hash
+      });
+    }
+  })
   return User;
 };

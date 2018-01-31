@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      productId: {
+      ProductId: {
         type: Sequelize.INTEGER
       },
-      invoiceId: {
-        type: Sequelize.STRING
+      InvoiceId: {
+        type: Sequelize.INTEGER
       },
       quantity: {
         type: Sequelize.INTEGER
@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.DATE
       }
     });

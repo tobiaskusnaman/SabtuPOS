@@ -8,12 +8,20 @@ const RouteProduct = require('./routers/product');
 const RouteHome = require('./routers/home');
 const RouteOrder = require('./routers/order');
 const RouteUser = require('./routers/user');
+const session = require('express-session')
+
+const authCheckLogin = require('./helpers/authLogIn');
+const authAdmin = require('./helpers/authLogInAdmin');
+app.use(session({
+  secret: 'keyboard cat'
+}))
 
 app.use('/product',RouteProduct);
-app.use('/user',RouteUser);
+app.use('/user',authAdmin.authAdmin,RouteUser);
 app.use('/', RouteHome)
-app.use('/order', RouteOrder)
+app.use('/order',authCheckLogin.checkLogIn, RouteOrder)
 app.use('/product', RouteProduct);
+
 
 
 app.listen(3000);
