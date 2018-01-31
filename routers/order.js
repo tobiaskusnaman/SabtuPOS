@@ -12,35 +12,16 @@ const InvoiceDetail = models.InvoiceDetail
 
 router.get('/',
   function(req,res,next){
-    //CEK masi ada invoice yang statusnya masi blm TRUE atau gk
-    Invoice.findAll({
-      limit : 1,
-      order : [['createdAt', 'ASC']],
-      where : {
-        status : null
-      }
-    }).then((invoice)=>{
-      if(invoice[0] == undefined){
-        Invoice.create().then((invoice)=>{
-          Invoice.findAll({
-            limit : 1,
-            order: [['createdAt', 'ASC']],
-            where : {
-              status : null
-            }
-          }).then((invoice)=>{
-            let err
-            res.redirect('/order')
-          })
-        })
-        .catch(err=>{
-          res.send(err)
-        })
-      }
+    Invoice.findOrCreate({where: {status: null}})
+      .spread((invoice, created) => {
+        console.log(invoice.get({
+        plain: true
+      }))
+    }).then(()=>{
+
+      next()
     })
-    next()
   }
-  //--------------------- selesai cek -------------------------
   ,(req,res)=>{
   Product.findAll().then((data)=>{
     Invoice.findAll({
@@ -91,13 +72,14 @@ router.post('/:id/invoices/:idInvoice',
           if (product.stock>0) {
             next()
           } else {
-            // res.redirect(`/order/?err=${err.message}`)
-            res.redirect(`/order/?err=sudahhabis`)
+            let errMsg = 'barang sudah habis'
+            res.redirect(`/order/?err=${errMsg}`)
           }
         })
       } else {
         if (invoice.Product.stock <= invoice.quantity) {
-          res.redirect(`/order/?err=sudahhabis`)
+          let errMsg = 'barang sudah habis'
+          res.redirect(`/order/?err=${errMsg}`)
         } else {
           next()
         }
@@ -174,6 +156,7 @@ router.post('/receipt/:id', (req,res)=>{
        type : req.body.type,
        isMember : req.body.memberType
      }).then((user)=>{
+       console.log(user.id,'===============================>>>>>>>>>>>>>>>>');
        Invoice.update({
          customerId : user.id,
          status : 'TRUE',
@@ -188,10 +171,6 @@ router.post('/receipt/:id', (req,res)=>{
        })
      })
   })
-
-
 })
-
-
 
 module.exports = router;

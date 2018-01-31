@@ -17,7 +17,6 @@ router.post('/', (req,res)=>{
   User.findOne({
     where : {
       email : req.body.email
-      // password : req.body.password
     }
   }).then(dataUser=>{
     if (dataUser) {

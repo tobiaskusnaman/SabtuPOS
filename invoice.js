@@ -12,9 +12,9 @@ const document = pdfInvoice({
     email: 'raque@gmail.com',
   },
   items: [
-    {amount: 50.0, name: 'XYZ', description: 'Lorem ipsum dollor sit amet', quantity: 12},
-    {amount: 12.0, name: 'ABC', description: 'Lorem ipsum dollor sit amet', quantity: 12},
-    {amount: 127.72, name: 'DFE', description: 'Lorem ipsum dollor sit amet', quantity: 12},
+    {amount: 120000, name: 'XYZ', description: 'Lorem ipsum dollor sit amet', quantity: 12},
+    {amount: 21300, name: 'ABC', description: 'Lorem ipsum dollor sit amet', quantity: 12},
+    {amount: 100000000000000, name: 'DFE', description: 'Lorem ipsum dollor sit amet', quantity: 12},
   ],
 })
 
