@@ -18,7 +18,7 @@ app.use(session({
 
 app.use('/product',RouteProduct);
 app.use('/user',authAdmin.authAdmin,RouteUser);
-app.use('/', RouteHome)
+app.use('/', RouteHome);
 app.use('/order',authCheckLogin.checkLogIn, RouteOrder)
 app.use('/product', RouteProduct);
 

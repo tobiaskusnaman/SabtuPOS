@@ -74,10 +74,6 @@ router.get('/listUser/edit/:id', (req, res) => {
     })
 });
 
-
-// UPDATE user
-router.post('/listUser/edit/:id', (req, res) => {
-
   // UPDATE user
   router.post('/:id/listUser/edit/:id',(req,res)=>{
     User.findById(req.params.id).then(row =>{
@@ -93,13 +89,11 @@ router.post('/listUser/edit/:id', (req, res) => {
           res.redirect('/user/:id/listUser')
         })
         .catch(err=>{
-          // res.send(err.message)
           res.redirect(`/listUser/edit/${req.params.id}/?err=${err.message}`);
         })
       }
     })
     .catch(err => {
-      // res.send(err.message)
       res.redirect(`/listUser/edit/:id/?err=${err.message}`);
     })
 })
