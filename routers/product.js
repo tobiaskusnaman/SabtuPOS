@@ -9,9 +9,15 @@ router.use(bodyParser.json())
 
 //List Product
 router.get('/:id/listProduct', (req,res)=>{
-  console.log(req.params.id)
+  let err
+  if (req.query && req.query.hasOwnProperty('err')) {
+    err = req.query.err
+  }
   Product.findAll().then(data => {
-      res.render('product', {data: data})
+      res.render('product', {
+        data: data,
+        err:err
+      })
   })
   .catch(err=>{
     res.send(err)
@@ -30,7 +36,7 @@ router.post('/addProduct', (req,res)=>{
     res.redirect(`/product/:id/listProduct`)
   })
   .catch(err=>{
-    res.send(err)
+    res.redirect(`/product/:id/listProduct/?=err${err.message}`)
   })
 })
 //GET edit
@@ -64,15 +70,15 @@ router.post('/listProduct/edit/:id', (req,res)=>{
 
 router.get('/delete/:id/', (req, res) => {
   Product.destroy({
-    where: { 
-      id: req.params.id 
+    where: {
+      id: req.params.id
     }
   }).then(() => {
       res.redirect('/product/:id/listProduct');
     })
     .catch(err=>{
       res.send(err)
-    })  
+    })
 })
 
 

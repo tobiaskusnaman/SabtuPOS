@@ -5,6 +5,10 @@
     <title>List Product</title>
   </head>
   <body>
+    <%if(err){%>
+      <p style="color:red;"><%=err%></p>
+
+   <%}%>
     <form action='/product/addProduct' method="POST">
       name:<br>
       <input type="text" name="name"><br>
@@ -28,7 +32,9 @@
           <th>price</th>
           <th>description</th>
         </tr>
-        <% data.forEach((row)=>{ %>
+        <% data.sort(function(a,b){
+          return a.id -b.id
+        }).forEach((row)=>{ %>
         <tr>
           <td><%= row.id %></td>
           <td><%= row.name %></td>

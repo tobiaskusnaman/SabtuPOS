@@ -5,6 +5,7 @@
     <title>List User</title>
   </head>
   <body>
+
     <form action="/user/:id/listUser" method="post">
       First Name:<br>
       <input type="text" name="firstName"><br>
@@ -13,15 +14,24 @@
       Email:<br>
       <input type="text" name="email"><br>
       Password:<br>
-      <input type="text" name="password"><br>
+      <input type="password" name="password"><br>
       Type:<br>
-      <input type="radio" name="typeUser" value="Admin"> Admin
-      <input type="radio" name="typeUser" value="Kasir"> Kasir<br>
+      <!-- <input type="radio" name="typeUser" value="Admin"> Admin
+      <input type="radio" name="typeUser" value="Kasir"> Kasir<br> -->
+      <select style="width: 130px" name="typeUser">
+        <option value="Kasir" selected>Kasir</option>
+        <option value="Admin">Admin</option>
+      </select><br>
       Membership:<br>
-      <input type="radio" name="memberType" value="TRUE"> True
-      <input type="radio" name="memberType" value="FALSE"> False<br>
+      <select style="width: 130px" name="memberType">
+        <option value=TRUE>TRUE</option>
+        <option value=FALSE selected>FALSE</option>
+      </select><br><br>
       <input style="width: 130px" type="submit" value="Submit">
     </form>
+    <%if(err){%>
+       <p style= "color: red"><%=err%></p>
+   <%}%>
 
       <table>
         <tr>
@@ -29,7 +39,7 @@
           <th>First Name</th>
           <th>Last Name</th>
           <th>Email</th>
-          <th>Password</th>
+          <!-- <th>Password</th> -->
           <th>Type</th>
           <th>Membership</th>
         </tr>
@@ -41,11 +51,11 @@
           <td><%= row.firstName %></td>
           <td><%= row.lastName %></td>
           <td><%= row.email %></td>
-          <td><%= row.password %></td>
+          <!-- <td><%= row.password %></td> -->
           <td><%= row.type %></td>
           <td><%= row.isMember %></td>
           <td>
-            <a href="/user/<%=row.id%>/listUser/edit/<%=row.id%>"> Edit </a>
+            <a href="/user/listUser/edit/<%=row.id%>"> Edit </a>
             <a href="/user/<%=row.id%>/listUser/delete/<%=row.id%>">Delete</a>
           </td>
         </tr>
