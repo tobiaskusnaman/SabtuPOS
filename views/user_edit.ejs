@@ -9,23 +9,52 @@
     <%if(err){%>
        <%=err%>
    <%}%>
-    <form action="/user/listUser/edit/<%=row.id%>" method="post">
-      First Name:<br>
-      <input type="text" name ="firstName" value="<%= row.firstName %>"><br>
-      Last Name:<br>
-      <input type="text" name="lastName" value="<%= row.lastName %>"><br>
-      Email:<br>
-      <input type="text" name="email" value="<%= row.email %>"><br>
-      Password:<br>
-      <input type="text" name="password" value="<%= row.password %>"><br>
-      Type:
-      <input type="radio" name="typeUser" value="Admin"> Admin
-      <input type="radio" name="typeUser" value="Kasir"> Kasir<br>
-      Membership:<br>
-      <input type="radio" name="memberType" value="TRUE"> True
-      <input type="radio" name="memberType" value="FALSE"> False<br>
-      <input style="width: 130px" type="submit" value="Submit">
-    </form>
+   <br>
+   <div class="container">
+     <div class="content">
+       <div class="box" style="width:350px">
+         <h1>Edit User</h1>
+         <form action="/user/listUser/edit/<%=row.id%>" method="post">
+           <div class="field">
+             <div class="control">
+               <input class="input" name="firstName" type="text" value="<%= row.firstName %>">
+             </div>
+             <p class="help">First name</p>
+           </div>
 
+           <div class="field">
+             <div class="control">
+               <input class="input" name="lastName" type="text" value="<%= row.lastName %>">
+             </div>
+             <p class="help">Last name</p>
+           </div>
+
+           <div class="field">
+             <div class="control">
+               <input class="input" name="email" type="text" value="<%= row.email %>">
+             </div>
+             <p class="help">Email</p>
+           </div>
+
+           <div class="field">
+             <div class="control">
+               <input class="input" name="password" type="password" value="<%= row.password %>">
+             </div>
+             <p class="help">Email password</p>
+           </div>
+
+           Type:<br>
+           <input type="radio" name="typeUser" value="Admin"> Admin
+           <input type="radio" name="typeUser" value="Kasir"> Kasir<br>
+           <br>
+           Membership:<br>
+           <input type="radio" name="memberType" value="TRUE"> True
+           <input type="radio" name="memberType" value="FALSE"> False<br>
+           <br>
+           <input class="button is-info" type="submit" value="Submit">
+         </form>
+       </div>
+     </div>
+   </div>
   </body>
 </html>

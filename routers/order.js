@@ -74,7 +74,7 @@ router.post('/:id/invoices/:idInvoice',
           if (product.stock>0) {
             next()
           } else {
-            let errMsg = 'barang sudah habis'
+            let errMsg = `${product.name} is sold out`
             res.redirect(`/order/?err=${errMsg}`)
           }
         })

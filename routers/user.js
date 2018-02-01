@@ -75,7 +75,7 @@ router.get('/listUser/edit/:id', (req, res) => {
 });
 
   // UPDATE user
-  router.post('/:id/listUser/edit/:id',(req,res)=>{
+  router.post('/listUser/edit/:id',(req,res)=>{
     User.findById(req.params.id).then(row =>{
       if (row) {
         row.update({
