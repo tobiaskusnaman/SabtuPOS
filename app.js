@@ -19,7 +19,7 @@ app.use(session({
 app.use('/user',authAdmin.authAdmin,RouteUser);
 app.use('/', RouteHome);
 app.use('/order', RouteOrder)
-// app.use('/product', RouteProduct);
+app.use('/product', RouteProduct);
 
 
 

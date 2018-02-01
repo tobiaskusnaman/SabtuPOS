@@ -5,6 +5,7 @@
     <title>Edit Product</title>
   </head>
   <body>
+    <% include ./partials/navbar %>
     <form action="/product/listProduct/edit/<%=row.id%>" method="post">
       Name:<br>
       <input type="text" name ="name" value="<%= row.name %>"><br>

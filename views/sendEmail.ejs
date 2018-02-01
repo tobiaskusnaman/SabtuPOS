@@ -5,6 +5,7 @@
     <title></title>
   </head>
   <body>
+    <% include ./partials/navbar %>
     <form action="/order/receipt/<%=id%>/sendInvoice/<%=user.id%>" method="POST">
     <p>Would you like to send invoice ?</p>
     <div>

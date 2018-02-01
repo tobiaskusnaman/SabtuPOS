@@ -5,57 +5,61 @@
     <title></title>
   </head>
   <body>
-
+    <% include ./partials/navbar %>
     <style>
       .container{
         width: 100%;
-        display: inline-flex;
       }
-
       .half_left{
-        display: inline-flex;
         float: left;
-        width:70%%;
-        height:1000px;
-        border: 1px solid;
+        width :60%;
+        min-height: 700px;
+        border: 2px solid;
       }
       .half_right{
         display: inline-block;
-        float: left;
-        width:30%%;
-        height:1000px;
-        border: 1px solid;
+        width : 40%;
+        min-height : 700px;
+        float: right;
+        border: 2px solid;
+      }
+      .kotak{
+        padding : 30px;
       }
     </style>
 
+    <div class="content">
     <div class="container">
       <div class="half_left">
-        <% data.forEach(row =>{ %>
+            <div class="columns is-1 is-multiline is-mobile kotak">
+              <% data.forEach(row =>{ %>
+                <div class="column is-one-third">
+                  <form action="/order/<%=row.id%>/invoices/<%=invoice[0].id%>" method="POST">
 
-          <form action="/order/<%=row.id%>/invoices/<%=invoice[0].id%>" method="POST">
-            <input type="image" name="itemId" src="<%= row.imgSource %>" width="200" height="200" value="<%= row.id %>" />
-
-          </form>
-
-        <% }) %>
-
+                        <input type="image" name="itemId" src="<%= row.imgSource %>" width="230" height="230" value="<%= row.id %>" />
+                        <h5><%=row.name%></h5>
+                  </form>
+                </div>
+                <% }) %>
+            </div>
         <% if (err) { %>
           <h2><%= err %> </h2>
         <% } %>
 
       </div>
 
-      <div class="half_right">
-        <h3>Rincian Order</h3>
+      <div class="half_right kotak">
+        <h3 class="title is-3">Rincian Order</h3>
         <h2>INVOICE ID : <%=invoice[0].id%></h2>
 
-        <table border = 1>
+        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
           <tr>
             <th>No</th>
             <th>Product</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Total Price</th>
+            <th>Delete</th>
           </tr>
           <% if (details !== undefined) { %>
             <% var subTotal = 0 %>
@@ -67,8 +71,11 @@
               <td><%= detail.quantity %></td>
               <td><%= detail.totalPrice(detail.Product.price,detail.quantity)%></td>
               <% subTotal += detail.totalPrice(detail.Product.price,detail.quantity) %>
+              <td>
+                <a class="delete" href="/order/invoice/<%=invoice[0].id%>/delete/<%=detail.ProductId%>"></a>
             </tr>
               <% }) %>
+
           <% } %>
         </table>
         <h2>Sub Total : </h2>
@@ -81,5 +88,9 @@
                 </form>
       </div>
     </div>
+  </div>
+    <br><br>
+
+
   </body>
 </html>
