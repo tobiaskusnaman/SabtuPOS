@@ -1,4 +1,5 @@
 'use strict';
+const Model = require('./index');
 module.exports = (sequelize, DataTypes) => {
   var InvoiceDetail = sequelize.define('InvoiceDetail', {
     ProductId: DataTypes.INTEGER,

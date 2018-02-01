@@ -12,35 +12,16 @@ const InvoiceDetail = models.InvoiceDetail
 
 router.get('/',
   function(req,res,next){
-    //CEK masi ada invoice yang statusnya masi blm TRUE atau gk
-    Invoice.findAll({
-      limit : 1,
-      order : [['createdAt', 'ASC']],
-      where : {
-        status : null
-      }
-    }).then((invoice)=>{
-      if(invoice[0] == undefined){
-        Invoice.create().then((invoice)=>{
-          Invoice.findAll({
-            limit : 1,
-            order: [['createdAt', 'ASC']],
-            where : {
-              status : null
-            }
-          }).then((invoice)=>{
-            let err
-            res.render('order',{data,invoice,err})
-          })
-        })
-        .catch(err=>{
-          res.send(err)
-        })
-      }
+    Invoice.findOrCreate({where: {status: null}})
+      .spread((invoice, created) => {
+        console.log(invoice.get({
+        plain: true
+      }))
+    }).then(()=>{
+
+      next()
     })
-    next()
   }
-  //--------------------- selesai cek -------------------------
   ,(req,res)=>{
   Product.findAll().then((data)=>{
     Invoice.findAll({
@@ -91,13 +72,14 @@ router.post('/:id/invoices/:idInvoice',
           if (product.stock>0) {
             next()
           } else {
-            // res.redirect(`/order/?err=${err.message}`)
-            res.redirect(`/order/?err=sudahhabis`)
+            let errMsg = 'barang sudah habis'
+            res.redirect(`/order/?err=${errMsg}`)
           }
         })
       } else {
         if (invoice.Product.stock <= invoice.quantity) {
-          res.redirect(`/order/?err=sudahhabis`)
+          let errMsg = 'barang sudah habis'
+          res.redirect(`/order/?err=${errMsg}`)
         } else {
           next()
         }
@@ -150,44 +132,44 @@ router.post('/invoice/:id', (req,res)=>{
 })
 
 router.post('/receipt/:id', (req,res)=>{
-  //kurangin quantity di Product
+  let promise = []
   InvoiceDetail.findAll({
+    include : [Product],
     where : {
       InvoiceId : req.params.id
     }
   }).then(details =>{
-    details.forEach(detail=>{
-      Product.findById(detail.ProductId).then(item =>{
-        item.update({
-          stock : (item.stock-detail.quantity)
-        })
-        item.save()
-      }).then(()=>{
-//--------------------------kurangin beres di sini--------------------------
-//record data Customer di User
-        User.create({
-          email : req.body.email,
-          type : req.body.type,
-          isMember : req.body.memberType
-        }).then((user)=>{
-          Invoice.findById(req.params.id)
-          .then(invoice => {
-//update status di INVOICES jadi TRUE
-            invoice.update({
-              customerId : user.id,
-              status : 'TRUE',
-              totalPrice : req.body.totalPrice,
-              paymentMethod : req.body.paymentMethod
-            }).then(invoice =>{
-              res.redirect('/order')
-            })
-          })
-        })
-      })
+    details.forEach(detail => {
+      promise.push(Product.update({
+        stock : (detail.Product.stock - detail.quantity)
+      }, {
+        where : {
+          id : detail.ProductId
+        }
+      }))
     })
-  }).catch(err=>{res.send(err)})
+  })
+
+  Promise.all(promise).then(()=>{
+    User.create({
+       email : req.body.email,
+       type : req.body.type,
+       isMember : req.body.memberType
+     }).then((user)=>{
+       Invoice.update({
+         customerId : user.id,
+         status : 'TRUE',
+         totalPrice : req.body.totalPrice,
+         paymentMethod : req.body.paymentMethod
+       }, {
+         where : {
+           id : req.params.id
+         }
+       }).then(()=>{
+         res.redirect('/order')
+       })
+     })
+  })
 })
-
-
 
 module.exports = router;
