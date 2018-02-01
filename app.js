@@ -18,8 +18,8 @@ app.use(session({
 
 app.use('/user',authAdmin.authAdmin,RouteUser);
 app.use('/', RouteHome);
-app.use('/order', RouteOrder)
-app.use('/product', RouteProduct);
+app.use('/order',authCheckLogin.checkLogIn, RouteOrder)
+app.use('/product',authAdmin.authAdmin, RouteProduct);
 
 
 
