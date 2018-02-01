@@ -10,7 +10,7 @@ const Product = models.Product
 const Invoice = models.Invoice
 const InvoiceDetail = models.InvoiceDetail
 const getInvoice = require('../invoice.js');
-const sendEmail = require('../helpers/emailFeature.js')
+const sendEmail = require('../helpers/emailFeature.js');
 
 router.get('/',
   function(req,res,next){
@@ -86,7 +86,6 @@ router.post('/:id/invoices/:idInvoice',
           next()
         }
       }
-
     }).catch(err=>res.send(err))
   }
 
@@ -114,7 +113,6 @@ router.post('/:id/invoices/:idInvoice',
       }
 
       InvoiceDetail.create(obj).then(()=>{
-
         res.redirect('/order')
       })
       .catch(err=>{
@@ -169,12 +167,14 @@ router.post('/receipt/:id', (req,res)=>{
          }
        }).then(()=>{
          if (user.email) {
+           Invoice.findProduct(user.id).then(result =>{
+             getInvoice.getInvoice(user,result)
              res.render('sendEmail',{
                id : req.params.id,
                user})
+
+           })
          } else {
-           console.log('GAK ADA EMAIL>>>>>>>>>>>>>>>>>');
-           // console.log('====================',user);
            res.redirect('/order')
          }
        })
@@ -183,25 +183,15 @@ router.post('/receipt/:id', (req,res)=>{
 })
 
   router.post('/receipt/:id/sendInvoice/:id_user', (req,res)=>{
-      Invoice.findProduct(req.params.id_user)
-      .then(result =>{
-        User.findById(result.customerId)
-        .then(user => {
-          if (req.body.isSend == 'true') {
-            getInvoice.getInvoice(user,result, function() {
-              sendEmail('asd','receipt.pdf')
-              
-            })
-            
-            // sendEmail.sendEmail(user.email,'receipt.pdf', function(status) {
-            //   res.send(status)
-            // })
-            
-            
-            // res.send('invoice jadi')
-          }
-        })
-      })
+    User.findById(req.params.id_user)
+    .then(user => {
+      if (req.body.isSend == 'true') {
+        sendEmail(user.email,'receipt.pdf')
+        res.redirect('/order')
+      } else {
+        res.redirect('/order')
+      }
+    })
   })
 
 
