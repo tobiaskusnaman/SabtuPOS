@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Invoice.findProduct = function (id) {
     var Product = this.sequelize.import('./product');
-    // var User = this.sequelize.import('./user')
     return Invoice.findOne({
       include : [Product],
       where : {

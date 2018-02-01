@@ -122,13 +122,29 @@ router.post('/:id/invoices/:idInvoice',
   })
 })
 
-router.post('/invoice/:id', (req,res)=>{
-  Invoice.findById(req.params.id,{
-    include :[Product]
-  }).then(invoice=>{
-    res.render('invoice',{invoice})
+router.get('/invoice/:id/delete/:item_id',(req,res)=>{
+  InvoiceDetail.destroy({
+    where : {
+      ProductId : req.params.item_id,
+      InvoiceId : req.params.id
+    }
+  }).then(()=>{
+    res.redirect('/order')
   })
-  .catch(err=>{res.send(err)})
+
+
+})
+
+
+router.post('/invoice/:id', (req,res)=>{
+  Product.findEmptyStock().then(emptyStocks => {
+    Invoice.findById(req.params.id,{
+      include :[Product]
+    }).then(invoice=>{
+      res.render('invoice',{invoice,emptyStocks})
+    })
+    .catch(err=>{res.send(err)})
+  })
 })
 
 router.post('/receipt/:id', (req,res)=>{

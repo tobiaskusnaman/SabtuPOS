@@ -23,5 +23,15 @@ module.exports = (sequelize, DataTypes) => {
     return price*quantity
   }
 
+  Product.findEmptyStock = function () {
+
+    return Product.findAll({
+      where : {
+        stock : 0
+      }
+    })
+  }
+
+
   return Product;
 };
