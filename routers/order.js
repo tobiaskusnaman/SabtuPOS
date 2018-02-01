@@ -156,7 +156,6 @@ router.post('/receipt/:id', (req,res)=>{
        type : req.body.type,
        isMember : req.body.memberType
      }).then((user)=>{
-       console.log(user.id,'===============================>>>>>>>>>>>>>>>>');
        Invoice.update({
          customerId : user.id,
          status : 'TRUE',
