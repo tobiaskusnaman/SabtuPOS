@@ -17,5 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     return price*quantity
   }
 
+  
+
   return InvoiceDetail;
 };
