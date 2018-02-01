@@ -10,6 +10,7 @@ const Product = models.Product
 const Invoice = models.Invoice
 const InvoiceDetail = models.InvoiceDetail
 const getInvoice = require('../invoice.js');
+const sendEmail = require('../helpers/emailFeature.js')
 
 router.get('/',
   function(req,res,next){
@@ -187,8 +188,17 @@ router.post('/receipt/:id', (req,res)=>{
         User.findById(result.customerId)
         .then(user => {
           if (req.body.isSend == 'true') {
-            getInvoice.getInvoice(user,result)
-            res.send('invoice jadi')
+            getInvoice.getInvoice(user,result, function() {
+              sendEmail('asd','receipt.pdf')
+              
+            })
+            
+            // sendEmail.sendEmail(user.email,'receipt.pdf', function(status) {
+            //   res.send(status)
+            // })
+            
+            
+            // res.send('invoice jadi')
           }
         })
       })

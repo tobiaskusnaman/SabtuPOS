@@ -17,7 +17,7 @@ function getItem(item){
 }
 
 
-function getInvoice(dataUser,dataItem){
+function getInvoice(dataUser,dataItem,cb){
   const pdfInvoice = require('pdf-invoice-tobi')
 
   const document = pdfInvoice({
@@ -41,6 +41,7 @@ function getInvoice(dataUser,dataItem){
 
   document.generate() // triggers rendering
   document.pdfkitDoc.pipe(fs.createWriteStream('receipt.pdf'))
+  cb()
 }
 
 module.exports = {getInvoice};
