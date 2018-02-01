@@ -6,19 +6,53 @@
   </head>
   <body>
     <% include ./partials/navbar %>
-    <form action="/product/listProduct/edit/<%=row.id%>" method="post">
-      Name:<br>
-      <input type="text" name ="name" value="<%= row.name %>"><br>
-      Stock:<br>
-      <input type="text" name="stock" value="<%= row.stock %>"><br>
-      Price:<br>
-      <input type="text" name="price" value="<%= row.price %>"><br>
-      Description:<br>
-      <input type="text" name="description" value="<%= row.description %>"><br>
-      Image:<br>
-      <input type="text" name="imgSource" value="<%= row.imgSource %>"><br>
-      <input type="submit" value="Submit">
-    </form>
+    <div class="container">
+      <div class="content">
+        <br><br>
+        <div class="box" style="width:350px">
+          <h1>Edit Item</h1>
+          <form action="/product/listProduct/edit/<%=row.id%>" method="post">
+            <div class="field">
+              <div class="control">
+                <input class="input" name="name" type="text" value="<%= row.name %>">
+              </div>
+              <p class="help">Product name</p>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <input class="input" name="stock" type="text" value="<%= row.stock %>">
+              </div>
+              <p class="help">Stock</p>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <input class="input" name="price" type="text" value="<%= row.price %>">
+              </div>
+              <p class="help">Price</p>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <input class="input" name="description" type="text" value="<%= row.description %>">
+              </div>
+              <p class="help">Product description</p>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <input class="input" name="imgSource" type="text" value="<%= row.imgSource %>">
+              </div>
+              <p class="help">Image source</p>
+            </div>
+
+            <input class="button is-info" type="submit" value="Submit">
+          </form>
+        </div>
+      </div>
+    </div>
+
 
   </body>
 </html>

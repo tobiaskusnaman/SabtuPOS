@@ -3,35 +3,20 @@
   <head>
     <meta charset="utf-8">
     <title>Home</title>
-    <style>
-    .box{
-  	width:100px;
-  	height:100px;
-    color: white;
-    }
-    .red{
-  	background:#f00;
-    }
-    .blue{
-    background:#0000FF;
-    }
-    </style>
   </head>
   <body>
     <% include ./partials/navbar %>
-    <p id="demo"></p>
-    <script>
-    document.getElementById("demo").innerHTML = Date();
-    </script>
+    <div class="content">
+      <div class="container">
+        <br>
       <h1>Selamat Datang, <%= row.firstName %> <%= row.lastName %></h1>
-      <table>
-  <tr>
-    <th class="box red"><a href="/user/<%=row.id%>/listUser">Add/Edit User</a></th>
-    <th class="box blue"><a href="/product/<%=row.id%>/listProduct">Add/Edit Item</a></th>
-  </tr>
-</table>
 
+      <a class="button is-rounded is-large is-warning" href="/user/<%=row.id%>/listUser">Add/Edit User</a>
+      <br> <br>
+      <a class="button is-rounded is-large is-warning" href="/product/<%=row.id%>/listProduct">Add/Edit Item</a>
 
+      </div>
+  </div>
     </form>
   </body>
 </html>

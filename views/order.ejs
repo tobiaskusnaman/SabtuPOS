@@ -14,14 +14,15 @@
         float: left;
         width :60%;
         min-height: 700px;
-        border: 2px solid;
+        border: 1px;
       }
       .half_right{
         display: inline-block;
         width : 40%;
-        min-height : 700px;
+        min-height : 500px;
         float: right;
-        border: 2px solid;
+        border: 1px solid;
+        margin-top: 2em;
       }
       .kotak{
         padding : 30px;
@@ -42,13 +43,9 @@
                 </div>
                 <% }) %>
             </div>
-        <% if (err) { %>
-          <h2><%= err %> </h2>
-        <% } %>
-
       </div>
 
-      <div class="half_right kotak">
+      <div class="box half_right kotak">
         <h3 class="title is-3">Rincian Order</h3>
         <h2>INVOICE ID : <%=invoice[0].id%></h2>
 
@@ -80,11 +77,13 @@
         </table>
         <h2>Sub Total : </h2>
           <%=subTotal%>
-        <h2></h2>
+          <% if (err) { %>
+            <h2 style="color : red"><%= err %> </h2>
+          <% } %>
         <br><br>
                 <form action="/order/invoice/<%=invoice[0].id%>" method="POST">
                   <input type="hidden" name="totalPrice" value="<%= subTotal %>">
-                  <input type="submit" value="Order">
+                  <input class="button is-link" type="submit" value="Order">
                 </form>
       </div>
     </div>
