@@ -9,6 +9,7 @@ const User = models.User
 const Product = models.Product
 const Invoice = models.Invoice
 const InvoiceDetail = models.InvoiceDetail
+const getInvoice = require('../invoice.js');
 
 router.get('/',
   function(req,res,next){
@@ -166,10 +167,32 @@ router.post('/receipt/:id', (req,res)=>{
            id : req.params.id
          }
        }).then(()=>{
-         res.redirect('/order')
+         if (user.email) {
+             res.render('sendEmail',{
+               id : req.params.id,
+               user})
+         } else {
+           console.log('GAK ADA EMAIL>>>>>>>>>>>>>>>>>');
+           // console.log('====================',user);
+           res.redirect('/order')
+         }
        })
      })
   })
 })
+
+  router.post('/receipt/:id/sendInvoice/:id_user', (req,res)=>{
+      Invoice.findProduct(req.params.id_user)
+      .then(result =>{
+        User.findById(result.customerId)
+        .then(user => {
+          if (req.body.isSend == 'true') {
+            getInvoice.getInvoice(user,result)
+            res.send('invoice jadi')
+          }
+        })
+      })
+  })
+
 
 module.exports = router;

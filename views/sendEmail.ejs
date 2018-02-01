@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form action="/order/receipt/<%=id%>/sendInvoice/<%=user.id%>" method="POST">
+    <p>Would you like to send invoice ?</p>
+    <div>
+      <input type="radio" id="contactChoice1"
+       name="isSend" value="true">
+      <label for="contactChoice1">Yes</label>
+
+      <input type="radio" id="contactChoice2"
+       name="isSend" value="false">
+      <label for="contactChoice2">No</label>
+
+    </div>
+    <div>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+  <br><br>
+  </body>
+</html>
