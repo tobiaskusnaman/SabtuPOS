@@ -10,7 +10,7 @@ function sendEmail(email,pdf){
 
   var data = {
     from: 'sabtuPOS<postmaster@sandboxc22ff63d8bff40e5a395e649df8bc370.mailgun.org>',
-    to: 'komelvin123@gmail.com',
+    to: email,
     subject: 'Hello from the other side',
     text: 'sabtuPOS',
     attachment: filepath,
