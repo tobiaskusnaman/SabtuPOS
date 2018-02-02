@@ -1,7 +1,7 @@
 {
   "name": "sabtupos",
   "version": "1.0.0",
-  "description": "",
+  "description": "Aplikasi POS untuk Bazaar",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +15,9 @@
   "bugs": {
     "url": "https://github.com/tobiaskusnaman/SabtuPOS/issues"
   },
+  "engines": {
+    "node": "4.1.1"
+  },
   "homepage": "https://github.com/tobiaskusnaman/SabtuPOS#readme",
   "dependencies": {
     "bcrypt": "^1.0.3",
@@ -23,6 +26,7 @@
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "foobar": "1.1.0",
     "mailgun-js": "^0.14.2",
     "pdf-invoice-tobi": "^1.0.3",
     "pg": "^6.4.2",
