@@ -5,9 +5,5 @@
     "database": "clqcxhmv",
     "host": "baasu.db.elephantsql.com",
     "dialect": "postgres"
-  },
-  "production": {
-    "use_env_variable": "DATABASE_URL"
-
   }
 }
