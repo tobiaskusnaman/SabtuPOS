@@ -3,13 +3,25 @@ module.exports = (sequelize, DataTypes) => {
   var Invoice = sequelize.define('Invoice', {
     customerId: DataTypes.INTEGER,
     totalPrice: DataTypes.INTEGER,
-    paymenMethod: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
+    paymentMethod: DataTypes.STRING,
+    status : DataTypes.BOOLEAN
   });
+
+  Invoice.associate = function (models) {
+    Invoice.hasMany(models.InvoiceDetail)
+    Invoice.belongsToMany(models.Product, {through: 'InvoiceDetail'});
+  };
+
+  Invoice.findProduct = function (id) {
+    var Product = this.sequelize.import('./product');
+    return Invoice.findOne({
+      include : [Product],
+      where : {
+        customerId : id
+      }
+    })
+  }
+
+
   return Invoice;
 };

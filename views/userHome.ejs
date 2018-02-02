@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Home</title>
+  </head>
+  <body>
+    <% include ./partials/navbar %>
+    <div class="content">
+      <div class="container">
+        <br>
+      <h1>Selamat Datang, <%= row.firstName %> <%= row.lastName %></h1>
+
+      <a class="button is-rounded is-large is-warning" href="/user/<%=row.id%>/listUser">Add/Edit User</a>
+      <br> <br>
+      <a class="button is-rounded is-large is-warning" href="/product/<%=row.id%>/listProduct">Add/Edit Item</a>
+
+      </div>
+  </div>
+    </form>
+  </body>
+</html>

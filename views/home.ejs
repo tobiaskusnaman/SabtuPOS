@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HOME</title>
+  </head>
+  <body style= "text-align:center">
+    <% include ./partials/navbar %>
+    <h1  class="title is-1 is-danger"><span style="font-size: 100px;">S</span><span style="font-size:75px">abtu</span> <span style="color:orange; font-size:100px; letter-spacing:0.5px;">POS</span></h1>
+    <h2 style="font-size:30px;">LOG IN</h2>
+    <form action="/" method="POST" class="container; notification column" style="font-size:50px;">
+      Email: <input type="text" name="email"><br>
+      Password: <input type="password" name="password"><br>
+      <input type="submit" value="Log In">
+    </form>
+    <br><br>
+    <% if (err) { %>
+      <%= err %>
+    <% } %>
+  </body>
+</html>
+
+
+
+ 

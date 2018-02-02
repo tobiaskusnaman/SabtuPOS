@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>List User</title>
+  </head>
+  <body>
+    <% include ./partials/navbar %>
+    <div class="content">
+      <div class="container">
+        <br>
+
+        <style>
+          .isiform {
+            width: 350px
+          }
+
+        </style>
+
+        <div class="box isiform">
+
+        <h2 class="title is-3">Create a new user</h2>
+        <form action="/user/:id/listUser" method="post">
+          <div class="field">
+            <div class="control">
+              <input class="input" name="firstName" type="text" placeholder="First name">
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <input class="input" name="lastName" type="text"  placeholder="Last Name">
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <input class="input" name="email" type="text"placeholder="Email address (example@example.com)">
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <input class="input" name="password" type="password" placeholder="New password">
+            </div>
+          </div>
+
+          Type:
+          <div class="control">
+            <div class="select">
+              <select name="typeUser">
+                <option value="Kasir" selected>Kasir</option>
+                <option value="Admin">Admin</option>
+              </select>
+            </div>
+          </div>
+
+
+          Membership:
+          <div class="control">
+            <div class="select">
+              <select name="memberType">
+                <option value=TRUE>TRUE</option>
+                <option value=FALSE selected>FALSE</option>
+              </select>
+            </div>
+          </div>
+          <br>
+          <input class="button is-info" type="submit" value="Submit">
+        </form>
+        <%if(err){%>
+           <p style= "color: red"><%=err%></p>
+       <%}%>
+       </div>
+       <br>
+
+        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Type</th>
+              <th>Membership</th>
+              <th>Action</th>
+            </tr>
+            <% data.sort(function(a,b){
+              return a.id -b.id
+            }).forEach((row)=>{ %>
+            <tr>
+              <td><%= row.id %></td>
+              <td><%= row.firstName %></td>
+              <td><%= row.lastName %></td>
+              <td><%= row.email %></td>
+              <td><%= row.type %></td>
+              <td><%= row.isMember %></td>
+              <td>
+                <a class="button is-rounded" href="/user/listUser/edit/<%=row.id%>"> Edit </a> |
+                <a class="tag is-delete is-danger" href="/user/<%=row.id%>/listUser/delete/<%=row.id%>"></a>
+              </td>
+            </tr>
+            <% }) %>
+          </table>
+      </div>
+    </div>
+  </body>
+</html>

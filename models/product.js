@@ -1,17 +1,37 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var product = sequelize.define('Product', {
+  var Product = sequelize.define('Product', {
     name: DataTypes.STRING,
-    stock: DataTypes.INTEGER,
+    stock: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt:{
+          msg:'Please enter a valid value'
+        }
+      }
+    },
     price: DataTypes.INTEGER,
     description: DataTypes.STRING,
     imgSource: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
+  })
+
+  Product.associate = function (models) {
+    Product.hasMany(models.InvoiceDetail);
+  };
+
+  Product.prototype.totalPrice = function (price, quantity) {
+    return price*quantity
+  }
+
+  Product.findEmptyStock = function () {
+
+    return Product.findAll({
+      where : {
+        stock : 0
       }
-    }
-  });
-  return product;
+    })
+  }
+
+
+  return Product;
 };

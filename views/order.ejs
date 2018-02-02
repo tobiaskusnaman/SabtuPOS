@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <% include ./partials/navbar %>
+    <style>
+      .container{
+        width: 100%;
+      }
+      .half_left{
+        float: left;
+        width :60%;
+        min-height: 700px;
+        border: 1px;
+      }
+      .half_right{
+        display: inline-block;
+        width : 40%;
+        min-height : 500px;
+        float: right;
+        border: 1px solid;
+        margin-top: 2em;
+      }
+      .kotak{
+        padding : 30px;
+      }
+    </style>
+
+    <div class="content">
+    <div class="container">
+      <div class="half_left">
+            <div class="columns is-1 is-multiline is-mobile kotak">
+              <% data.forEach(row =>{ %>
+                <div class="column is-one-third">
+                  <form action="/order/<%=row.id%>/invoices/<%=invoice[0].id%>" method="POST">
+
+                        <input type="image" name="itemId" src="<%= row.imgSource %>" width="230" height="230" value="<%= row.id %>" />
+                        <h5><%=row.name%></h5>
+                  </form>
+                </div>
+                <% }) %>
+            </div>
+      </div>
+
+      <div class="box half_right kotak">
+        <h3 class="title is-3">Rincian Order</h3>
+        <h2>INVOICE ID : <%=invoice[0].id%></h2>
+
+        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <tr>
+            <th>No</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Delete</th>
+          </tr>
+          <% if (details !== undefined) { %>
+            <% var subTotal = 0 %>
+              <% details.forEach((detail,i) =>{ %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= detail.Product.name%></td>
+              <td><%= detail.Product.price %></td>
+              <td><%= detail.quantity %></td>
+              <td><%= detail.totalPrice(detail.Product.price,detail.quantity)%></td>
+              <% subTotal += detail.totalPrice(detail.Product.price,detail.quantity) %>
+              <td>
+                <a class="delete" href="/order/invoice/<%=invoice[0].id%>/delete/<%=detail.ProductId%>"></a>
+            </tr>
+              <% }) %>
+
+          <% } %>
+        </table>
+        <h2>Sub Total : </h2>
+          <%=subTotal%>
+          <% if (err) { %>
+            <h2 style="color : red"><%= err %> </h2>
+          <% } %>
+        <br><br>
+                <form action="/order/invoice/<%=invoice[0].id%>" method="POST">
+                  <input type="hidden" name="totalPrice" value="<%= subTotal %>">
+                  <input class="button is-link" type="submit" value="Order">
+                </form>
+      </div>
+    </div>
+  </div>
+    <br><br>
+
+
+  </body>
+</html>

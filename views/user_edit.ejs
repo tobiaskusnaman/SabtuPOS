@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit User</title>
+  </head>
+  <body>
+    <% include ./partials/navbar %>
+    <%if(err){%>
+       <%=err%>
+   <%}%>
+   <br>
+   <div class="container">
+     <div class="content">
+       <div class="box" style="width:350px">
+         <h1>Edit User</h1>
+         <form action="/user/listUser/edit/<%=row.id%>" method="post">
+           <div class="field">
+             <div class="control">
+               <input class="input" name="firstName" type="text" value="<%= row.firstName %>">
+             </div>
+             <p class="help">First name</p>
+           </div>
+
+           <div class="field">
+             <div class="control">
+               <input class="input" name="lastName" type="text" value="<%= row.lastName %>">
+             </div>
+             <p class="help">Last name</p>
+           </div>
+
+           <div class="field">
+             <div class="control">
+               <input class="input" name="email" type="text" value="<%= row.email %>">
+             </div>
+             <p class="help">Email</p>
+           </div>
+
+           <div class="field">
+             <div class="control">
+               <input class="input" name="password" type="password">
+             </div>
+             <p class="help">Enter new password</p>
+           </div>
+
+           Type:<br>
+           <input type="radio" name="typeUser" value="Admin"> Admin
+           <input type="radio" name="typeUser" value="Kasir"> Kasir<br>
+           <br>
+           Membership:<br>
+           <input type="radio" name="memberType" value="TRUE"> True
+           <input type="radio" name="memberType" value="FALSE"> False<br>
+           <br>
+           <input class="button is-info" type="submit" value="Submit">
+         </form>
+       </div>
+     </div>
+   </div>
+  </body>
+</html>

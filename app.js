@@ -4,8 +4,23 @@ const ejs = require('ejs')
 app.set('views', './views')
 app.set('view engine', 'ejs')
 
-const RouteProduct = require('./routes/product');
+const RouteProduct = require('./routers/product');
+const RouteHome = require('./routers/home');
+const RouteOrder = require('./routers/order');
+const RouteUser = require('./routers/user');
+const session = require('express-session')
 
-app.use('/product', RouteProduct);
+const authCheckLogin = require('./helpers/authLogIn');
+const authAdmin = require('./helpers/authLogInAdmin');
+app.use(session({
+  secret: 'keyboard cat'
+}))
 
-app.listen(3000);
+app.use('/user',authAdmin.authAdmin,RouteUser);
+app.use('/', RouteHome);
+app.use('/order',authCheckLogin.checkLogIn, RouteOrder)
+app.use('/product',authAdmin.authAdmin, RouteProduct);
+
+
+
+app.listen(process.env.PORT||3000);
