@@ -13,7 +13,8 @@ function sendEmail(email,pdf){
     to: email,
     subject: 'WrapItSocks Invoice',
     text: `I WRAP IT LIKE THAT!
-    FUN FACT #1:
+    
+FUN FACT #1:
 Bamboo is Anti-Bacterial – Bamboo contains a characteristic bio-operators known as Bamboo Kun which is actually hostile to bacterial. It is very effective to the point that it wipes out and averts more than 70% of microorganisms that tries to grow on it, whether this be in its natural or fabric form.
 Curious?
 
