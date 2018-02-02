@@ -17,7 +17,7 @@
     "url": "https://github.com/tobiaskusnaman/SabtuPOS/issues"
   },
   "engines": {
-    "node": "4.1.1"
+    "node": "8.9.1"
   },
   "homepage": "https://github.com/tobiaskusnaman/SabtuPOS#readme",
   "dependencies": {
